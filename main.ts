@@ -48,10 +48,10 @@ drawButtonEl.addEventListener("click", () => {
 
 	balls.forEach((el) => {
 		const ballText: any = el.children[0];
+		el.style.background = getRandomBallBg();
 		if (correctGuesses.includes(parseInt(ballText.innerText))) {
 			el.style.background = "var(--gradient-green)";
 		}
-		el.style.background = getRandomBallBg();
 	});
 	confetti();
 	enterAnimation.play();
@@ -89,8 +89,11 @@ const toggleResult = (correctGuesses?: number, totalGuesses?: number) => {
 	showingResults = !showingResults;
 	resultContainer.classList.toggle("result--active");
 	if (!showingResults) return;
-
-	resultText.innerText = `Gratulacje, zgadłeś ${correctGuesses} z ${totalGuesses} liczb`;
+	if(correctGuesses < 1){
+		resultText.innerText = `Lipa`;
+	}else{
+		resultText.innerText = `Gratulacje, zgadłeś ${correctGuesses} z ${totalGuesses} liczb`;
+	}
 };
 
 const getRandomBallBg = () => {
@@ -116,7 +119,7 @@ const calculateScore = (
 const getRandomNumbers = (amount: number) => {
 	return Array(amount)
 		.fill(1)
-		.map(() => Math.floor(Math.random() * 100));
+		.map(() => Math.floor(Math.random() * 48)+1);
 };
 
 function validateInput() {
